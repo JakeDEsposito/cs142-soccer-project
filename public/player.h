@@ -1,17 +1,33 @@
 #include <string>
+#include <ctime>
 
 class Player
 {
 public:
-  Player();
-  Player(std::string n, int yob, std::string cat, std::string rs);
+  Player(std::string fn, std::string ln, int yob, bool rs = false);
+  Player(std::string fn, std::string ln, int yob, int cat, bool rs);
+  Player(std::string data);
   std::string getName();
   int getYOB();
-  std::string getCatagory();
-  std::string getRegistration();
+  int getCategory();
+  std::string getCategoryAsString();
+  bool getRegistration();
+  void setRegistration(bool rs);
+
+  std::string & operator [] (const std::string & query);
+
+  std::string getLedgeMapKey();
+
+  std::string save();
+  void load(std::string data);
+
 private:
-  std::string name;
-  int yob;
-  std::string cata;
-  std::string regStat;
+  int calculateCategory();
+  int currentYear();
+
+  std::string fname;
+  std::string lname;
+  int birthYear;
+  int category;
+  bool regStat;
 };
