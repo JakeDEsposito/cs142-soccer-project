@@ -24,8 +24,10 @@ std::vector<Player> Ledge::search(LedgeFilter filter)
 {
     std::vector<LedgeFilter::Filter> filters = filter.getCurrentFiltersInUse();
 
-    if(filterPlayerVectorMap.find(filters) == filterPlayerVectorMap.end())
+    if(filterPlayerVectorMap.find(filters) == filterPlayerVectorMap.end() || lastLedgeMapSize != ledgeMap.size())
     {
+        lastLedgeMapSize = ledgeMap.size();
+        
         std::vector<Player> result;
 
         if(filters.size() > 0)
@@ -72,7 +74,7 @@ void Ledge::save(std::string filename)
     file.close();
 }
 
-std::string Ledge::load(std::string filename)
+int Ledge::load(std::string filename)
 {
     try
     {
@@ -89,7 +91,7 @@ std::string Ledge::load(std::string filename)
     }
     catch(const std::exception& e)
     {
-        return "error: Attempted to open a file that does not excist";
+        return 1;
     }
-    return "";
+    return 0;
 }
