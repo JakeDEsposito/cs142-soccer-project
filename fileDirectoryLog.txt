@@ -8,7 +8,7 @@ cs142-soccer-projectv3/
 			player.cpp
 				#include "player.h"
 			ui.cpp
-				#include "ledge.h", "player.h"
+				#include "ledge.h", "player.h", "buffer.h"
 		public/
 			vendor/
 				listeditor/
@@ -23,6 +23,7 @@ cs142-soccer-projectv3/
 				#include "player.h"
 			player.h
 	executables/
+		ThisFileIsToKeppTheFolderFromGettingAutoDeleted.txt
 	.dir-locals.el
 	documentation.txt
 	fileDirecoryLog.txt

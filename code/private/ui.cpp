@@ -20,22 +20,27 @@ bool endProgram(Ledge & ledger)
 		cout<<endl;
 		if(toupper(control.at(0))=='Y')
 		{
-			string fileName;
-			cout<<"Enter the name you would like for the file (WARNING WILL OVERWRITE FILE SPECIFIED IF IT PRE-EXISTS) press [C] to cancel:\n\t";
-			cin>>fileName;
-			cout<<endl;
-			if(toupper(fileName.at(0))=='C')
-			{
-				if((fileName.compare("n")==0)||(fileName.compare("N")==0))
-				{
-					return false;
-				}
-			}
-			ledger.save(fileName);
+			return saveLedger(ledger);
 		}
-		return true;
 	}
 	return false;
+}
+
+bool saveLedger(Ledge & ledger)
+{
+	string fileName;
+	cout<<"Enter the name you would like for the file (WARNING WILL OVERWRITE FILE SPECIFIED IF IT PRE-EXISTS) press [C] to cancel:\n\t";
+	cin>>fileName;
+	cout<<endl;
+	if(toupper(fileName.at(0))=='C')
+	{
+		if((fileName.compare("c")==0)||(fileName.compare("C")==0))
+		{
+			return false;
+		}
+	}
+	ledger.save(fileName);
+	return true;
 }
 
 bool searchView(Vector<Player> & playerList)
@@ -44,6 +49,10 @@ bool searchView(Vector<Player> & playerList)
 
 int main()
 {
+	int year;
+	cout<<"Enter the year for the new season:\t";
+	cin>>year;
+	cout<<endl;
 	Ledge ledger=new Ledge();
 	string control=N;
 	cout<<"Press [Y] if you would like to load a previose session or [N] if you would like to start fresh";
@@ -67,19 +76,41 @@ int main()
 	while (true)//main view
 	{
 		bool endP=false;
-		cout<<"Options are: [N]ew season, [A]dd player, [S]earch for player, Save [L]edger,"+
+		cout<<"Options are: [N]ew season, [A]dd player, [F]iltered player list, [S]ave ledger,"+
 				"[P]rint player list, [D]isplay stats, [E]xit Program"<<endl;
 		cout<<"Choice:\t";
 		cin>>control;
 		switch(toupper(control.at(0)))
 		{
 			case 'N':
-				
+				cout<<"WARNING: This will delete all players!!! Press [Y] to start a new season or [N] to cancel:\t";
+				cin>>control;
+				cout<<endl;
+				if(toupper(control.at(0))=='Y')
+				{
+					cout<<"Enter the year for the new season:\t";
+					cin>>year;
+					cout<<endl;
+					ledger=new Ledge();
+				}
 				break;
 			case 'A':
-				
+				string fn;
+				string ln;
+				int yob;
+				bool regStat;
+				cout<<"Enter their first name:\t";
+				cin>>fn;
+				cout<<endl<<"Enter their last name:\t";
+				cin>>ln;
+				cout<<endl<<"Enter their year of birth:\t";
+				cin>>yob;
+				cout<<endl<<"Enter [1] if they are registered or [0] if they are un-registered:\t";
+				cin>>regStat;
+				cout<<endl;
+				ledger.addPlayer(Player(fn, ln, yob, regStat));
 				break;
-			case 'S':
+			case 'F':
 				
 				endP=searchView();
 				break;
@@ -89,10 +120,10 @@ int main()
 			case 'D':
 				
 				break;
-			case 'E':
-				
+			case 'S':
+				bool temp=saveLedger(ledger);
 				break;
-			case 'L':
+			case 'E':
 				endP=endProgram(ledger);
 				break;
 			default:

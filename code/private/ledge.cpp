@@ -1,5 +1,14 @@
 #include "ledge.h"
 
+Ledge::Ledge(int ledgeYear)
+{
+    lastLedgeMapSize = 0;
+    if(ledgeYear != -1)
+        programYear = ledgeYear;
+    else
+        programYear = currentYear();
+}
+
 void Ledge::addPlayer(Player player)
 {
     ledgeMap[player.getLedgeMapKey()] = player;
@@ -24,8 +33,10 @@ std::vector<Player> Ledge::search(LedgeFilter filter)
 {
     std::vector<LedgeFilter::Filter> filters = filter.getCurrentFiltersInUse();
 
-    if(filterPlayerVectorMap.find(filters) == filterPlayerVectorMap.end())
+    if(filterPlayerVectorMap.find(filters) == filterPlayerVectorMap.end() || lastLedgeMapSize != ledgeMap.size())
     {
+        lastLedgeMapSize = ledgeMap.size();
+        
         std::vector<Player> result;
 
         if(filters.size() > 0)
@@ -92,4 +103,12 @@ int Ledge::load(std::string filename)
         return 1;
     }
     return 0;
+}
+
+//https://stackoverflow.com/questions/58151350/more-elegant-way-to-get-the-current-year-in-c
+int currentYear()
+{
+    std::time_t t = std::time(nullptr);
+    std::tm *const pTInfo = std::localtime(&t);
+    return 1900 + pTInfo->tm_year;
 }
