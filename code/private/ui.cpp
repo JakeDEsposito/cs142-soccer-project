@@ -43,13 +43,78 @@ bool saveLedger(Ledge & ledger)
 	return true;
 }
 
-bool searchView(Ledge & playerList)
+bool searchLogic(Ledge & playerList, vector<Player> & players)
 {
 	string control;
-	bool r=false;
+	bool rExit=false;
+
+	string fn, ln, key;
+	int YOB, cat, reg;
+
+	cout<<"Enter the first name to filter by or [N] to skip this filter:\t";
+	cin>>control;
+	cout<<endl;
+	if(control.compare("N")==0||control.compare("n")==0)
+	{
+		fn="";
+	}
+	else
+	{
+		fn=control;
+	}
+
+	cout<<"Enter the last name to filter by or [N] to skip this filter:\t";
+	cin>>control;
+	cout<<endl;
+	if(control.compare("N")==0||control.compare("n")==0)
+	{
+		ln="";
+	}
+	else
+	{
+		ln=control;
+	}
+
+	cout<<"Enter the keyword to filter by or [N] to skip this filter:\t";
+	cin>>control;
+	cout<<endl;
+	if(control.compare("N")==0||control.compare("n")==0)
+	{
+		key="";
+	}
+	else
+	{
+		key=control;
+	}
+
+	cout<<"Enter the year of birth to filter by or [0] to skip this filter:\t";
+	cin>>YOB;
+	cout<<endl;
 	
+	cout<<"Enter the catagory number to filter by or [0] to skip this filter:\t";
+	cin>>cat;
+	cout<<endl;
+
+	cout<<"Enter [0] to filter out registered players, [1] to filter out unregistered ";
+	cout<<endl<<"\tplayers, or [3] to skip this filter:\t";
+	cin>>reg;
+	cout<<endl;
+
+	players=playerList.search(fn, ln, key, YOB, cat, reg);
+	if(players.size()==0)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
+bool searchView(Ledge & playerList, vector<Player> p)
+{
 	
-	
+
 	while(true)
 	{
 		cout<<"Options are: [F]ilter the player list, [N]ext player, P[r]eviose player, E[d]it player, ";
@@ -57,10 +122,52 @@ bool searchView(Ledge & playerList)
 		cout<<"Choice:\t";
 		cin>>control;
 		
-		
+		switch(toupper(control.at(0)))
+		{
+			switch 'F':
+			{
+				
+				break;
+			}
+			switch 'N':
+			{
+				
+				break;
+			}
+			switch 'R':
+			{
+				
+				break;
+			}
+			switch 'D':
+			{
+				
+				break;
+			}
+			switch 'P':
+			{
+				
+				break;
+			}
+			switch 'X':
+			{
+				
+				break;
+			}
+			switch 'E':
+			{
+				
+				break;
+			}
+			default:
+			{
+				cout<<"ERROR: Option Does Not Exist";
+				break;
+			}
+		}
 	}
 	
-	return r;
+	return rExit;
 }
 
 int main()
@@ -118,7 +225,7 @@ int main()
 					cin>>year;
 					cout<<endl;
 					
-					ledger = new Ledge();
+					//ledger = new Ledge();
 				}
 				break;
 			}
@@ -147,7 +254,11 @@ int main()
 			}
 			case 'F':
 			{
-				endP=searchView(ledger);
+				vector<Player> players;
+				if(searchLogic(ledger, players))
+				{
+					endP=searchView(ledger, players);
+				}
 				break;
 			}
 			case 'P':
