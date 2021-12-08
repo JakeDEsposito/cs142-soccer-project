@@ -7,7 +7,7 @@
 #include "player.h"
 using namespace std;
 
-bool endProgram(Ledge & ledger)
+bool endProgram(const Ledge & ledger)
 {
 	string control="N";
 	cout<<"Press [Y] to confirm program exit or [N] to cancel:\t";
@@ -26,7 +26,7 @@ bool endProgram(Ledge & ledger)
 	return false;
 }
 
-bool saveLedger(Ledge & ledger)
+bool saveLedger(const Ledge & ledger)
 {
 	string fileName;
 	cout<<"Enter the name you would like for the file (WARNING WILL OVERWRITE FILE SPECIFIED IF IT PRE-EXISTS) press [C] to cancel:\n\t";
@@ -43,7 +43,7 @@ bool saveLedger(Ledge & ledger)
 	return true;
 }
 
-void print(vector<Player> playerV)
+void print(const vector<Player> playerV)
 {
 	ofstream outstr;
 	string control;
@@ -88,9 +88,26 @@ void print(vector<Player> playerV)
 
 void displayP(vector<Player> playerV, int c)
 {
-	int temp=-4+c;
-	while()
-	for(int i=)
+	int temp=-3+c;
+	while (temp<0)
+	{
+		temp+=playerV.size();
+	}
+	
+	for(int i=0;i<8;i++)
+	{
+		if(i==4)
+		{
+			cout<<" >  "<<temp<<"\t";
+		}
+		else
+		{
+			cout<<"    "<<temp<<"\t";
+		}
+		cout<<"Name:  "<<playerV[temp]->getName()<<"\tYOB:  ";
+		cout<<playerV[temp].getYOB()<<"\tCategory:  "<<playerV[temp].getCategoryAsString()<<"\tRegistered:  ";
+		cout<<playerV[temp].getRegistration<<endl;
+	}
 }
 
 bool searchLogic(Ledge & playerList, vector<Player> & players)
@@ -187,17 +204,52 @@ bool searchView(Ledge & playerList, vector<Player> & p)
 			{
 				playerN++;
 				playerN=(playerN%p.size());
+				displayP(p, playerN);
 				break;
 			}
 			case 'R':
 			{
 				playerN--;
 				playerN=(playerN%p.size());
+				displayP(p, playerN);
 				break;
 			}
 			case 'D':
 			{
-				playerList.editPlayer(p[playerN])
+				string ofn, oln, nfn, nln;
+				int nYOB, reg;
+				bool nReg;
+
+				ofn=p[playerN]["fn"];
+				oln=p[playerN]["ln"];
+
+				cout<<"Enter their new first name  or [N] to leave it unchanged:\t";
+				cin>>nfn;
+				if(toupper(nfn.at(0))=='N')
+				{
+					if(nfn.compare("n")==0||nfn.compare("N")==0)
+					{
+						nfn="";
+					}
+				}
+				
+				cout<<endl<<"Enter their new last name or [N] to leave it unchanged:\t";
+				cin>>nln;
+				if(toupper(nln.at(0))=='N')
+				{
+					if(nln.compare("n")==0||nln.compare("N")==0)
+					{
+						nln="";
+					}
+				}
+				
+				cout<<endl<<"Enter their new year of birth or [0] to leave it unchanged:\t";
+				cin>>nYOB;
+				
+				cout<<endl<<"Enter [1] if they are registered, [0] if they are un-registered, or [3] to leave it unchanged:\t";
+				cin>>reg;
+
+				playerList.editPlayer(oln,ofn,nfn,nln,nYOB,reg);
 				break;
 			}
 			case 'P':
