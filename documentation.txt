@@ -1,0 +1,89 @@
+ui.cpp:
+  functions needed for each view:
+	  both:
+		  end program
+	  main view:
+		  start a new season
+		  add a player
+		  search for players and then switches to search view unless nothing matching was found
+		  print a list of players
+		  display stats
+	  search view:
+		  move to next/previose player
+		  edit a player's info
+		  print a list of players based on last search
+		  exit search view
+
+ledge.h:
+    Ledge(int ledgeYear = -1)
+		Default constructor that can take in an optional ledge year (in none is provided the program will detect a year)
+    addPlayer(Player player)
+    	Adds a player to the ledge.
+    removePlayer(Player player)
+    	Removes a player from the ledge based of the player object or the players ledge key.
+    editPlayer(Player player)
+    	sets the value of the player in the map to the player that is passed into the function. 
+		takes an object of player class.
+    search(LedgeFilter filter)
+    	Returns a vector of players in ledge based on the filter set.
+    allPlayers()
+    	Returns all players in ledge as a vector.
+    save(std::string filename)
+    	Saves the ledge into a file of name filename.
+    load(std::string filename)
+    	Loads the ledge from a file of filename. and returns an int 0 if sucesfull or a 1 if it failed
+
+ledgefilter.h:
+    LedgeFilter(int birth_year = 0, int category = 0, bool registration = 0): yob(birth_year), cat(category), reg(registration) {}
+    	Default constructor that can take in values for yob, category, and regStat filtering. 
+		Leave variable as 0 to have the filter not be set.
+    Filter { birth_year, category, registration }
+    	enum for using the filters. returns an enum
+    getFilter(Filter filter)
+    	returns the integer value of the given filter.
+    setFilter(Filter filter, int new_val)
+    	takes in a filter to set and a value to set it to.
+    [Filter filter]
+    	returns the integer value of the given filter. takes a object of Filter class
+    std::vector<Filter> getCurrentFiltersInUse()
+    	returns a vector of the current filters that have a value set for them 
+		(have a filter set to 0 is the equivalent of the filter being off).
+
+player.h:
+  Player(std::string fn, std::string ln, int yob, bool rs = false)
+  	sets the fn to fname, ln to lname, yob to birthYear, and rs to regStat.
+	Also calculates the category based on the birthYear and current year of the computer
+  Player(std::string fn, std::string ln, int yob, int cat, bool rs)
+  	sets the fn to fname, ln to lname, yob to birthYear, cat to category, and rs to regStat.
+  Player(std::string data)
+  	takes in a data string and sets all nessisarry variables.
+  getName()
+  	returns fname [space] lname as a string
+  getYOB()
+  	returns birthYear as an integer
+  getCategory()
+  	returns category as an integer
+  getCategoryAsString()
+  	returns "U" + category as a string
+  getRegistration()
+  	returns regStat as a boolean
+  setRegistration(bool rs)
+  	sets regStat to the value of rs.
+
+  // Params: query
+  /* returns a string based on the query.
+  if query then string
+    if fn then fname
+    if ln then lname
+    if by then birthYear
+    if ca then category
+    if rs then regStat
+  */
+  std::string & operator [] (const std::string & query)
+
+  getLedgeMapKey()
+  	Returns a formated string used for indexing into the ledge map
+  save()
+  	Returns a string that can be saved and later reloaded into a player
+  load(std::string data)
+  	Loads a data string into the nessisary variables

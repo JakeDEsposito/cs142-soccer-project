@@ -1,0 +1,31 @@
+cs142-soccer-projectv3/
+	code/
+		private/
+			ledge.cpp
+				#include "ledge.h"
+			ledgefilter.cpp
+				#include "ledgefilter.h"
+			player.cpp
+				#include "player.h"
+			ui.cpp
+				#include "ledge.h", "player.h", "ledgefilter.h"
+		public/
+			vendor/
+				listeditor/
+					buffer.h
+					bufferlib.cpp
+						#include "buffer.h"
+					ui.cpp
+						#include "buffer.h"
+			ledge.h
+				#include "ledgefilter.h", "player.h"
+			ledgefilter.h
+				#include "player.h"
+			player.h
+	executables/
+		ThisFileIsToKeppTheFolderFromGettingAutoDeleted.txt
+	.dir-locals.el
+	documentation.txt
+	fileDirecoryLog.txt
+	makefile
+	README.md
