@@ -86,6 +86,13 @@ void print(vector<Player> playerV)
 	}
 }
 
+void displayP(vector<Player> playerV, int c)
+{
+	int temp=-4+c;
+	while()
+	for(int i=)
+}
+
 bool searchLogic(Ledge & playerList, vector<Player> & players)
 {
 	string control;
@@ -170,7 +177,10 @@ bool searchView(Ledge & playerList, vector<Player> & p)
 		{
 			case 'F':
 			{
-				bool temp=searchLogic(playerList, p);
+				if(searchLogic(playerList, p)==false)
+				{
+					cout<<"ERROR: No results found, "<<endl;
+				}
 				break;
 			}
 			case 'N':
