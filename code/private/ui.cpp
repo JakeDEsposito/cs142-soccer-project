@@ -4,13 +4,12 @@
 #include <cstring>
 
 #include "ledge.h"
-#include "ledgefilter.h"
 #include "player.h"
 using namespace std;
 
 bool endProgram(Ledge & ledger)
 {
-	string control=N;
+	string control="N";
 	cout<<"Press [Y] to confirm program exit or [N] to cancel:\t";
 	cin>>control;
 	cout<<endl;
@@ -53,8 +52,8 @@ bool searchView(Ledge & playerList)
 	
 	while(true)
 	{
-		cout<<"Options are: [F]ilter the player list, [N]ext player, P[r]eviose player, E[d]it player, "+
-				"\n\t[P]rint player list, E[x]it filter view, [E]xit Program"<<endl;
+		cout<<"Options are: [F]ilter the player list, [N]ext player, P[r]eviose player, E[d]it player, ";
+		cout<<"\n\t[P]rint player list, E[x]it filter view, [E]xit Program"<<endl;
 		cout<<"Choice:\t";
 		cin>>control;
 		
@@ -71,9 +70,9 @@ int main()
 	cin>>year;
 	cout<<endl;
 	
-	Ledge ledger=new Ledge();
+	Ledge ledger;
 	
-	string control=N;
+	string control="N";
 	
 	cout<<"Press [Y] if you would like to load a previose session or [N] if you would like to start fresh";
 	cin>>control;
@@ -87,7 +86,8 @@ int main()
 		cin>>fileName;
 		cout<<endl;
 		
-		if(ledger.load(fileName)=1)
+		int tempC=ledger.load(fileName);
+		if(tempC=1)
 		{
 			cout<<"ERROR: Attempted to open a file that does not exist!!!"<<endl;
 			cout<<"\tPress [Y] to try a diffrent file or [N] to launch without loading a previose session:\t";
@@ -99,8 +99,8 @@ int main()
 	while (true)//main view
 	{
 		bool endP=false;
-		cout<<"Options are: [N]ew season, [A]dd player, [F]ilter the player list, [S]ave ledger,"+
-				"[P]rint player list, [D]isplay stats, [E]xit Program"<<endl;
+		cout<<"Options are: [N]ew season, [A]dd player, [F]ilter the player list, [S]ave ledger,";
+		cout<<"[P]rint player list, [D]isplay stats, [E]xit Program"<<endl;
 		cout<<"Choice:\t";
 		cin>>control;
 		
@@ -118,7 +118,7 @@ int main()
 					cin>>year;
 					cout<<endl;
 					
-					ledger=new Ledge();
+					ledger = new Ledge();
 				}
 				break;
 			}
@@ -182,9 +182,9 @@ int main()
 						{
 							for(Player p: playerV)
 							{
-								if(c.compare(p[ca])==0)
+								if(c.compare(p["ca"])==0)
 								{
-									outstr<<p[fn]<<p[ln]<<p[by]<<p[ca]<<p[rs]<<endl;
+									outstr<<p["fn"]<<p["ln"]<<p["by"]<<p["ca"]<<p["rs"]<<endl;
 								}
 							}
 						}
@@ -207,7 +207,7 @@ int main()
 				{
 					for(Player p: playerV)
 					{
-						if(cat[i].compare(p[ca])==0)
+						if(cat[i].compare(p["ca"])==0)
 						{
 							totalPlayers[i]++;
 							if(p.getRegistration())
