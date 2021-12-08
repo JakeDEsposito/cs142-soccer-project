@@ -297,7 +297,8 @@ int main()
 	cout<<endl;
 	
 	Ledge ledger;
-	
+	ledger.programYear=year;
+
 	string control="N";
 	
 	cout<<"Press [Y] if you would like to load a previose session or [N] if you would like to start fresh";
@@ -340,11 +341,19 @@ int main()
 				
 				if(toupper(control.at(0))=='Y')
 				{
+					year;
 					cout<<"Enter the year for the new season:\t";
-					cin>>year;
-					cout<<endl;
+					try
+					{
+						cin>>year;
+						cout<<endl;
+					}
+					catch(const exception& e)
+					{
+						cout<<endl<<"ERROR: Invalid Input"<<endl;
+					}
 					
-					//ledger = new Ledge();
+					ledger.wipe(year);
 				}
 				break;
 			}
