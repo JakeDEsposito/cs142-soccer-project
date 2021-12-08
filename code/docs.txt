@@ -19,6 +19,10 @@ Player:
         Returns nothing since it is a constructor
         This constructor is really only meant to be used by ledge for loading a session from a file
     
+    ~Player()
+        Creates one pointer for each on the private datas and deletes it
+        Resturns nothing
+
     getName()
         Returns the name of the Player
         Returns fname [space] lname (string)
@@ -66,6 +70,10 @@ Ledge:
     Ledge(int ledgeYear = -1)
         Sets the value of the programYear to ledgeYear if ledgeYear is a parameter. if its not a parameter, the constructor will get the computers year instead
         Return nothing since it is a constructor
+
+    ~Ledge()
+        Deletes the ledge map and the program year
+        Returns nothing
 
     addPlayer(Player player)
         adds a new player to the ledge based on last and first name

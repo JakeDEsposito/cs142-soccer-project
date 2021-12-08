@@ -21,6 +21,8 @@ public:
   // takes in a data string and sets all nessisarry variables.
   Player(std::string data);
 
+  ~Player();
+
   // returns fname [space] lname.
   std::string getName();
 

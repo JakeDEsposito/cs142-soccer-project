@@ -12,6 +12,8 @@ class Ledge
 public:
     //Default constructor that can take in an optional ledge year (in none is provided the program will detect a year)
     Ledge(int ledgeYear = -1);
+
+    ~Ledge();
     
     // Adds a player to the ledge.
     void addPlayer(Player player);

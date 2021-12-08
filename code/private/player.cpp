@@ -23,6 +23,21 @@ Player::Player(std::string data)
     load(data);
 }
 
+Player::~Player()
+{
+    auto fnamePtr = &fname;
+    auto lnamePtr = &lname;
+    auto birthYearPtr = &birthYear;
+    auto categoryPtr = &category;
+    auto regStatPtr = &regStat;
+
+    delete fnamePtr;
+    delete lnamePtr;
+    delete birthYearPtr;
+    delete categoryPtr;
+    delete regStatPtr;
+}
+
 std::string Player::getName()
 {
     return fname + " " + lname;

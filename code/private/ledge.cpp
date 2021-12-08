@@ -8,6 +8,25 @@ Ledge::Ledge(int ledgeYear)
         programYear = currentYear();
 }
 
+Ledge::~Ledge()
+{
+    for(auto i = ledgeMap.begin(); i != ledgeMap.end(); i++)
+    {
+        for(auto j = i->second.begin(); j != i->second.end(); j++)
+        {
+            auto playerPtr = &(j->second);
+            delete playerPtr;
+        }
+        auto innerLedgeMapPtr = &(i->second);
+        delete innerLedgeMapPtr;
+    }
+    auto ledgeMapPtr = &ledgeMap;
+    delete ledgeMapPtr;
+
+    auto programYearPtr = &programYear;
+    delete programYearPtr;
+}
+
 void Ledge::addPlayer(Player player)
 {
     //ledgeMap[player.getLedgeMapKey()] = player;
