@@ -4,11 +4,16 @@
 #include <string>
 #include <ctime>
 
+#ifndef LEDGE
+#define LEDGE
+#include "ledge.h"
+#endif
+
 class Player
 {
 public:
   // sets the fn to fname, ln to lname, yob to birthYear, and rs to regStat. Also calculates the category based on the birthYear and current year of the computer
-  Player(std::string fn, std::string ln, int yob, bool rs = false);
+  Player(std::string fn, std::string ln, int yob, bool rs);
 
   // sets the fn to fname, ln to lname, yob to birthYear, cat to category, and rs to regStat.
   Player(std::string fn, std::string ln, int yob, int cat, bool rs);
@@ -45,9 +50,6 @@ public:
   */
   std::string & operator [] (const std::string & query);
 
-  // Returns a formated string used for indexing into the ledge map
-  std::string getLedgeMapKey();
-
   // Returns a string that can be saved and later reloaded into a player
   std::string save();
 
@@ -56,7 +58,6 @@ public:
 
 private:
   int calculateCategory();
-  int currentYear();
 
   std::string fname;
   std::string lname;

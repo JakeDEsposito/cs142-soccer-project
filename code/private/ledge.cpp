@@ -2,7 +2,6 @@
 
 Ledge::Ledge(int ledgeYear)
 {
-    lastLedgeMapSize = 0;
     if(ledgeYear != -1)
         programYear = ledgeYear;
     else
@@ -11,68 +10,100 @@ Ledge::Ledge(int ledgeYear)
 
 void Ledge::addPlayer(Player player)
 {
-    ledgeMap[player.getLedgeMapKey()] = player;
+    //ledgeMap[player.getLedgeMapKey()] = player;
+    ledgeMap[player["ln"]][player["fn"]] = player;
 }
 
 void Ledge::removePlayer(Player player)
 {
-    ledgeMap.erase(player.getLedgeMapKey());
+    //ledgeMap.erase(player.getLedgeMapKey());
+    ledgeMap[player["ln"]].erase(player["fn"]);
 }
 
-void Ledge::removePlayer(std::string player)
+void Ledge::removePlayer(std::string lname, std::string fname)
 {
-    ledgeMap.erase(player);
+    //ledgeMap.erase(player);
+    ledgeMap[lname].erase(fname);
 }
 
 void Ledge::editPlayer(Player player)
 {
-    ledgeMap[player.getLedgeMapKey()] = player;
+    //ledgeMap[player.getLedgeMapKey()] = player;
+    ledgeMap[player["ln"]][player["fn"]] = player;
 }
 
-std::vector<Player> Ledge::search(LedgeFilter filter)
+std::vector<Player> Ledge::search(std::string fname, std::string lname, std::string keyword, int birth_year, int category, int registration)
 {
-    std::vector<LedgeFilter::Filter> filters = filter.getCurrentFiltersInUse();
+    std::vector<Player> result = allPlayers();
 
-    if(filterPlayerVectorMap.find(filters) == filterPlayerVectorMap.end() || lastLedgeMapSize != ledgeMap.size())
+    if(lname != "")
     {
-        lastLedgeMapSize = ledgeMap.size();
-        
-        std::vector<Player> result;
-
-        if(filters.size() > 0)
-            for(auto i = ledgeMap.begin(); i != ledgeMap.end(); i++)
-            {
-                if(filter[LedgeFilter::Filter::birth_year] && i->second.getYOB() == filter[LedgeFilter::Filter::birth_year])
-                    result.push_back(i->second);
-
-                if(filter[LedgeFilter::Filter::category] && i->second.getCategory() == filter[LedgeFilter::Filter::category])
-                    result.push_back(i->second);
-
-                if(filter[LedgeFilter::Filter::registration] && i->second.getRegistration() == filter[LedgeFilter::Filter::registration])
-                    result.push_back(i->second);
-            }
-        else
-            for(auto i = ledgeMap.begin(); i != ledgeMap.end(); i++)
-                result.push_back(i->second);
-
-        filterPlayerVectorMap[filters] = result;
-        return result;
+        std::vector<Player> insideVector;
+        for(auto i = ledgeMap.begin(); i != ledgeMap.end(); i++)
+            if(i->first == lname)
+                for(auto j = i->second.begin(); j != i->second.end(); j++)
+                    insideVector.push_back(j->second);
+        result = insideVector;
     }
-    else
+    if(fname != "")
     {
-        return filterPlayerVectorMap[filters];
+        std::vector<Player> insideVector;
+        for(auto i = result.begin(); i != result.end(); i++)
+            if((*i)["fn"] == fname)
+                insideVector.push_back(*i);
+        result = insideVector;
     }
+    if(keyword != "")
+    {
+        std::vector<Player> insideVector;
+        for(auto i = result.begin(); i != result.end(); i++)
+            if(((*i)["fn"] + (*i)["ln"]).find(keyword) != std::string::npos)
+                insideVector.push_back(*i);
+        result = insideVector;
+    }
+    if(birth_year != 0)
+    {
+        std::vector<Player> insideVector;
+        for(auto i = result.begin(); i != result.end(); i++)
+            if((*i).getYOB() == birth_year)
+                insideVector.push_back(*i);
+        result = insideVector;
+    }
+    if(category != 0)
+    {
+        std::vector<Player> insideVector;
+        for(auto i = result.begin(); i != result.end(); i++)
+            if((*i).getCategory() == category)
+                insideVector.push_back(*i);
+        result = insideVector;
+    }
+    if(registration == 0 || registration == 1)
+    {
+        std::vector<Player> insideVector;
+        for(auto i = result.begin(); i != result.end(); i++)
+            if((*i).getRegistration() == registration)
+                insideVector.push_back(*i);
+        result = insideVector;
+    }
+    return result;
 }
 
 std::vector<Player> Ledge::allPlayers()
 {
-    return search(LedgeFilter());
+    std::vector<Player> result;
+    for(auto i = ledgeMap.begin(); i != ledgeMap.end(); i++)
+        for(auto j = i->second.begin(); j != i->second.end(); j++)
+            result.push_back(j->second);
+    return result;
 }
 
 void Ledge::save(std::string filename)
 {
     std::ofstream file(filename);
     std::vector<Player> players = allPlayers();
+
+    file << Ledge::programYear;
+    file << std::endl;
 
     for(Player p : players)
     {
@@ -88,6 +119,10 @@ int Ledge::load(std::string filename)
     try
     {
         std::ifstream file(filename);
+
+        std::string temp;
+        file >> temp;
+        Ledge::programYear = std::stoi(temp);
 
         while(!file.eof())
         {
