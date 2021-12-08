@@ -5,7 +5,6 @@
 #include <fstream>
 #include <iostream>
 
-#include "ledgefilter.h"
 #include "player.h"
 
 class Ledge
@@ -21,7 +20,7 @@ public:
     void removePlayer(Player player);
 
     // Removes a player from the ledge based of the players ledge key.
-    void removePlayer(std::string player);
+    void removePlayer(std::string lname, std::string fname);
 
     /*
         Params:
@@ -39,7 +38,8 @@ public:
     void editPlayer(Player player);
 
     // Returns a vector of players in ledge based on the filter set.
-    std::vector<Player> search(LedgeFilter filter);
+    // Defaults for strings are "" and int are 0
+    std::vector<Player> search(std::string fname, std::string lname, std::string keyword, int birth_year, int category, int registration);
 
     // Returns all players in ledge.
     std::vector<Player> allPlayers();
@@ -53,8 +53,7 @@ public:
     static int programYear;
 
 private:
-    std::map<std::string, Player> ledgeMap;
-    int lastLedgeMapSize;
+    //std::map<std::string, Player> ledgeMap;
 
-    std::map<std::vector<LedgeFilter::Filter>, std::vector<Player> > filterPlayerVectorMap;
+    std::map<std::string, std::map<std::string, Player> > ledgeMap;
 };

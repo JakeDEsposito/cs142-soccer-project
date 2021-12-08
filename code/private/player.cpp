@@ -69,11 +69,6 @@ std::string & Player::operator[](const std::string & query)
         return std::string("error: Faulty player query!");
 }
 
-std::string Player::getLedgeMapKey()
-{
-    return fname + "_" + lname;
-}
-
 std::string Player::save()
 {
     return fname + "_" + lname + ":" + std::to_string(birthYear) + "." + std::to_string(category) + "," + std::to_string(regStat);
@@ -90,7 +85,7 @@ void Player::load(std::string data)
 
 int Player::calculateCategory()
 {
-    int yearAge = currentYear() - birthYear;
+    int yearAge = Ledge::programYear - birthYear;
     
     if(yearAge < 6)
         return 6;
@@ -104,12 +99,4 @@ int Player::calculateCategory()
         return 14;
     else if(yearAge < 17)
         return 17;
-}
-
-//https://stackoverflow.com/questions/58151350/more-elegant-way-to-get-the-current-year-in-c
-int Player::currentYear()
-{
-    std::time_t t = std::time(nullptr);
-    std::tm *const pTInfo = std::localtime(&t);
-    return 1900 + pTInfo->tm_year;
 }
