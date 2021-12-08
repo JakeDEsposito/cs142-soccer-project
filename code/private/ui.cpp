@@ -43,10 +43,52 @@ bool saveLedger(Ledge & ledger)
 	return true;
 }
 
+void print(vector<Player> playerV)
+{
+	ofstream outstr;
+	string control;
+	
+	while(true)
+	{
+		string fileName;
+		cout<<"Enter the name of the file you would like to load:\t";
+		cin>>fileName;
+		cout<<endl;
+		
+		outstr.open(fileName);
+		if(outstr.fail())
+		{
+			cout<<"ERROR: failed to open/create file "+fileName+"!!!"<<endl;
+			cout<<"\tPress [Y] to try a diffrent file or [N] to cancel:\t";
+			cin>>control;
+			
+			if(toupper(control.at(0))=='N')
+			{
+				break;
+			}
+		}
+		else
+		{
+			vector<string> cat={"U6", "U8", "U10", "U12", "U14", "U17"};
+			
+			for(string c: cat)
+			{
+				for(Player p: playerV)
+				{
+					if(c.compare(p["ca"])==0)
+					{
+						outstr<<p["fn"]<<p["ln"]<<p["by"]<<p["ca"]<<p["rs"]<<endl;
+					}
+				}
+			}
+			break;
+		}
+	}
+}
+
 bool searchLogic(Ledge & playerList, vector<Player> & players)
 {
 	string control;
-	bool rExit=false;
 
 	string fn, ln, key;
 	int YOB, cat, reg;
@@ -111,9 +153,11 @@ bool searchLogic(Ledge & playerList, vector<Player> & players)
 	}
 }
 
-bool searchView(Ledge & playerList, vector<Player> p)
+bool searchView(Ledge & playerList, vector<Player> & p)
 {
-	
+	string control;
+	bool rExit, pExit;
+	int playerN=0;
 
 	while(true)
 	{
@@ -124,39 +168,42 @@ bool searchView(Ledge & playerList, vector<Player> p)
 		
 		switch(toupper(control.at(0)))
 		{
-			switch 'F':
+			case 'F':
 			{
-				
+				bool temp=searchLogic(playerList, p);
 				break;
 			}
-			switch 'N':
+			case 'N':
 			{
-				
+				playerN++;
+				playerN=(playerN%p.size());
 				break;
 			}
-			switch 'R':
+			case 'R':
 			{
-				
+				playerN--;
+				playerN=(playerN%p.size());
 				break;
 			}
-			switch 'D':
+			case 'D':
 			{
-				
+				playerList.editPlayer(p[playerN])
 				break;
 			}
-			switch 'P':
+			case 'P':
 			{
-				
+				print(p);
 				break;
 			}
-			switch 'X':
+			case 'X':
 			{
-				
+				rExit=true;
+				pExit=false;
 				break;
 			}
-			switch 'E':
+			case 'E':
 			{
-				
+				rExit=pExit=true;
 				break;
 			}
 			default:
@@ -165,9 +212,13 @@ bool searchView(Ledge & playerList, vector<Player> p)
 				break;
 			}
 		}
+		if(rExit)
+		{
+			break;
+		}
 	}
 	
-	return rExit;
+	return pExit;
 }
 
 int main()
@@ -263,45 +314,8 @@ int main()
 			}
 			case 'P':
 			{
-				ofstream outstr;
-				
-				while(true)
-				{
-					string fileName;
-					cout<<"Enter the name of the file you would like to load:\t";
-					cin>>fileName;
-					cout<<endl;
-					
-					outstr.open(fileName);
-					if(outstr.fail())
-					{
-						cout<<"ERROR: failed to open/create file "+fileName+"!!!"<<endl;
-						cout<<"\tPress [Y] to try a diffrent file or [N] to cancel:\t";
-						cin>>control;
-						
-						if(toupper(control.at(0))=='N')
-						{
-							break;
-						}
-					}
-					else
-					{
-						vector<string> cat={"U6", "U8", "U10", "U12", "U14", "U17"};
-						vector<Player> playerV=ledger.allPlayers();
-						
-						for(string c: cat)
-						{
-							for(Player p: playerV)
-							{
-								if(c.compare(p["ca"])==0)
-								{
-									outstr<<p["fn"]<<p["ln"]<<p["by"]<<p["ca"]<<p["rs"]<<endl;
-								}
-							}
-						}
-						break;
-					}
-				}
+				vector<Player> playerV=ledger.allPlayers();
+				print(playerV);
 				break;
 			}
 			case 'D':
