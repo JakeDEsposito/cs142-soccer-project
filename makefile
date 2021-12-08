@@ -44,14 +44,6 @@ cleanA:
 	make clean~
 	make cleanP
 
-# Code taken from cthorpe/public/142/listeditor which has been modified
-fv: $(O)/LEui.o $(O)/bufferlib.o
-	$(CC) $(O)/LEui.o $(O)/bufferlib.o -o $(E)/fv
-LEui.o: $(LE)/ui.cpp $(LE)/buffer.h
-	$(CC) $(CFLAGS11) -c $(LE)/ui.cpp -o $(O)/LEui.o
-bufferlib.o: $(LE)/bufferlib.cpp $(LE)/buffer.h
-	$(CC) $(CFLAGS11) -c $(LE)/bufferlib.cpp -o $(O)/bufferlib.o
-
 #SoccerProject
 SoccerReg: $(O)/ui.o $(O)/ledge.o $(O)/player.o
 	$(CC) $(CFLAGS11) -c $(O)/ui.o $(O)/ledge.o $(O)/player.o -o $(E)/SoccerReg
