@@ -37,7 +37,7 @@ public:
             
             ledgeMap["mark_park"] = p;
     */
-    void editPlayer(std::string lname, std::string fname, std::string newfname, std::string newlname, int newbirth_year, bool newregistration, int newcategory = -1);
+    void editPlayer(std::string lname, std::string fname, std::string newfname = "", std::string newlname = "", int newbirth_year = -1, int newregistration = -1, int newcategory = -1);
 
     // Returns a vector of players in ledge based on the filter set.
     // Defaults for strings are "" and int are 0

@@ -45,13 +45,39 @@ void Ledge::removePlayer(std::string lname, std::string fname)
     ledgeMap[lname].erase(fname);
 }
 
-void Ledge::editPlayer(std::string lname, std::string fname, std::string newfname, std::string newlname, int newbirth_year, bool newregistration, int newcategory)
+void Ledge::editPlayer(std::string lname, std::string fname, std::string newfname, std::string newlname, int newbirth_year, int newregistration, int newcategory)
 {
     //ledgeMap[player.getLedgeMapKey()] = player;
-    if(newcategory == -1)
-        ledgeMap[lname][fname] = Player(newfname, newlname, newbirth_year, newregistration);
+    Player toEdit = ledgeMap[lname][fname];
+    std::string firstName, lastName;
+    int birth, reg, cat;
+
+    if(newfname != "")
+        firstName = newfname;
     else
-        ledgeMap[lname][fname] = Player(newfname, newlname, newbirth_year, newcategory, newregistration);
+        firstName = toEdit["fn"];
+
+    if(newlname != "")
+        lastName = newlname;
+    else
+        lastName = toEdit["ln"];
+
+    if(birth != -1)
+        birth = newbirth_year;
+    else
+        birth = toEdit.getYOB();
+    
+    if(reg != -1)
+        reg = newregistration;
+    else
+        reg = toEdit.getRegistration();
+    
+    if(cat != -1)
+        cat = newcategory;
+    else
+        cat = toEdit.getCategory();
+
+    ledgeMap[lname][fname] = Player(firstName, lastName, birth, cat, reg);
 }
 
 std::vector<Player> Ledge::search(std::string fname, std::string lname, std::string keyword, int birth_year, int category, int registration)
