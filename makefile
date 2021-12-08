@@ -53,13 +53,13 @@ bufferlib.o: $(LE)/bufferlib.cpp $(LE)/buffer.h
 	$(CC) $(CFLAGS11) -c $(LE)/bufferlib.cpp -o $(O)/bufferlib.o
 
 #SoccerProject
-SoccerReg: $(O)/ui.o $(O)/ledge.o $(O)/ledgef.o $(O)/player.o $(O)/bufferlib.o
-	$(CC) $(CFLAGS11) -c $(O)/ui.o $(O)/ledge.o $(O)/ledgef.o $(O)/player.o $(O)/bufferlib.o -o $(E)/SoccerReg
+SoccerReg: $(O)/ui.o $(O)/ledge.o $(O)/ledgef.o $(O)/player.o
+	$(CC) $(CFLAGS11) -c $(O)/ui.o $(O)/ledge.o $(O)/ledgef.o $(O)/player.o -o $(E)/SoccerReg
 ledge.o: $(PR)/ledge.cpp $(PU)/ledge.h $(PU)/ledgefilter.h $(PU)/player.h
 	$(CC) $(CFLAGS11) -c $(PR)/ledge.cpp -o $(O)/ledge.o
 ledgef.o: $(PR)/ledgefilter.cpp $(PU)/ledgefilter.h $(PU)/player.h
 	$(CC) $(CFLAGS11) -c $(PR)/ledgefilter.cpp -o $(O)/ledgef.o
 player.o: $(PR)/player.cpp $(PU)/player.h
 	$(CC) $(CFLAGS11) -c $(PR)/player.cpp -o $(O)/player.o
-ui.o: $(PR)/ui.cpp $(PU)/ledge.h $(PU)/ledgefilter.h $(PU)/player.h $(LE)/buffer.h
+ui.o: $(PR)/ui.cpp $(PU)/ledge.h $(PU)/ledgefilter.h $(PU)/player.h
 	$(CC) $(CFLAGS11) -c $(PR)/ui.cpp -o $(O)/ui.o

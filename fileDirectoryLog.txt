@@ -8,7 +8,7 @@ cs142-soccer-projectv3/
 			player.cpp
 				#include "player.h"
 			ui.cpp
-				#include "ledge.h", "player.h", "buffer.h"
+				#include "ledge.h", "player.h", "ledgefilter.h"
 		public/
 			vendor/
 				listeditor/

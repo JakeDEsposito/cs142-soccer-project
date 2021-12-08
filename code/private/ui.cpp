@@ -4,8 +4,8 @@
 #include <cstring>
 
 #include "ledge.h"
+#include "ledgefilter.h"
 #include "player.h"
-#include "buffer.h"
 using namespace std;
 
 bool endProgram(Ledge & ledger)
@@ -44,11 +44,24 @@ bool saveLedger(Ledge & ledger)
 	return true;
 }
 
-bool searchView(Vector<Player> & playerList)
+bool searchView(Ledge & playerList)
 {
 	string control;
-	Buffer buffer;
+	bool r=false;
 	
+	
+	
+	while(true)
+	{
+		cout<<"Options are: [F]ilter the player list, [N]ext player, P[r]eviose player, E[d]it player, "+
+				"\n\t[P]rint player list, E[x]it filter view, [E]xit Program"<<endl;
+		cout<<"Choice:\t";
+		cin>>control;
+		
+		
+	}
+	
+	return r;
 }
 
 int main()
@@ -94,6 +107,7 @@ int main()
 		switch(toupper(control.at(0)))
 		{
 			case 'N':
+			{
 				cout<<"WARNING: This will delete all players!!! Press [Y] to start a new season or [N] to cancel:\t";
 				cin>>control;
 				cout<<endl;
@@ -107,7 +121,9 @@ int main()
 					ledger=new Ledge();
 				}
 				break;
+			}
 			case 'A':
+			{
 				string fn;
 				string ln;
 				int yob;
@@ -128,10 +144,14 @@ int main()
 				
 				ledger.addPlayer(Player(fn, ln, yob, regStat));
 				break;
+			}
 			case 'F':
-				endP=searchView();
+			{
+				endP=searchView(ledger);
 				break;
+			}
 			case 'P':
+			{
 				ofstream outstr;
 				
 				while(true)
@@ -172,7 +192,9 @@ int main()
 					}
 				}
 				break;
+			}
 			case 'D':
+			{
 				vector<string> cat={"U6", "U8", "U10", "U12", "U14", "U17"};
 				vector<Player> playerV=ledger.allPlayers();
 				
@@ -217,15 +239,22 @@ int main()
 				}
 				
 				break;
+			}
 			case 'S':
+			{
 				bool temp=saveLedger(ledger);
 				break;
+			}
 			case 'E':
+			{
 				endP=endProgram(ledger);
 				break;
+			}
 			default:
+			{
 				cout<<"ERROR: Option Does Not Exist";
 				break;
+			}
 		}
 		if(endP)
 		{
