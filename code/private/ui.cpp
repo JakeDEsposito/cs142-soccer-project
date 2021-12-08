@@ -7,7 +7,7 @@
 #include "player.h"
 using namespace std;
 
-bool endProgram(const Ledge & ledger)
+bool endProgram(Ledge & ledger)
 {
 	string control="N";
 	cout<<"Press [Y] to confirm program exit or [N] to cancel:\t";
@@ -26,7 +26,7 @@ bool endProgram(const Ledge & ledger)
 	return false;
 }
 
-bool saveLedger(const Ledge & ledger)
+bool saveLedger(Ledge & ledger)
 {
 	string fileName;
 	cout<<"Enter the name you would like for the file (WARNING WILL OVERWRITE FILE SPECIFIED IF IT PRE-EXISTS) press [C] to cancel:\n\t";
@@ -43,7 +43,7 @@ bool saveLedger(const Ledge & ledger)
 	return true;
 }
 
-void print(const vector<Player> playerV)
+void print(const vector<Player> & playerV)
 {
 	ofstream outstr;
 	string control;
@@ -86,7 +86,7 @@ void print(const vector<Player> playerV)
 	}
 }
 
-void displayP(vector<Player> playerV, int c)
+void displayP(vector<Player> & playerV, int c)
 {
 	int temp=-3+c;
 	while (temp<0)
@@ -96,7 +96,7 @@ void displayP(vector<Player> playerV, int c)
 	
 	for(int i=0;i<8;i++)
 	{
-		if(i==4)
+		if(temp==c)
 		{
 			cout<<" >  "<<temp<<"\t";
 		}
@@ -104,10 +104,12 @@ void displayP(vector<Player> playerV, int c)
 		{
 			cout<<"    "<<temp<<"\t";
 		}
-		cout<<"Name:  "<<playerV[temp]->getName()<<"\tYOB:  ";
-		cout<<playerV[temp].getYOB()<<"\tCategory:  "<<playerV[temp].getCategoryAsString()<<"\tRegistered:  ";
-		cout<<playerV[temp].getRegistration<<endl;
+		cout<<"Name:  "<<playerV[temp].getName()<<"\tYOB:  "<<playerV[temp].getYOB();
+		cout<<"\tCategory:  "<<playerV[temp].getCategoryAsString()<<"\tRegistered:  ";
+		cout<<playerV[temp].getRegistration()<<endl;
+		temp=(temp+1)%playerV.size();
 	}
+
 }
 
 bool searchLogic(Ledge & playerList, vector<Player> & players)
@@ -248,6 +250,10 @@ bool searchView(Ledge & playerList, vector<Player> & p)
 				
 				cout<<endl<<"Enter [1] if they are registered, [0] if they are un-registered, or [3] to leave it unchanged:\t";
 				cin>>reg;
+				if(reg!=1||reg!=0)
+				{
+					reg=-1;
+				}
 
 				playerList.editPlayer(oln,ofn,nfn,nln,nYOB,reg);
 				break;
