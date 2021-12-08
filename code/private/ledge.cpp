@@ -45,10 +45,13 @@ void Ledge::removePlayer(std::string lname, std::string fname)
     ledgeMap[lname].erase(fname);
 }
 
-void Ledge::editPlayer(Player player)
+void Ledge::editPlayer(std::string lname, std::string fname, std::string newfname, std::string newlname, int newbirth_year, bool newregistration, int newcategory)
 {
     //ledgeMap[player.getLedgeMapKey()] = player;
-    ledgeMap[player["ln"]][player["fn"]] = player;
+    if(newcategory == -1)
+        ledgeMap[lname][fname] = Player(newfname, newlname, newbirth_year, newregistration);
+    else
+        ledgeMap[lname][fname] = Player(newfname, newlname, newbirth_year, newcategory, newregistration);
 }
 
 std::vector<Player> Ledge::search(std::string fname, std::string lname, std::string keyword, int birth_year, int category, int registration)
