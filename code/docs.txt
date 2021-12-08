@@ -88,10 +88,10 @@ Ledge:
         removes a player from the ledge based on lname and fname
         returns void
 
-    editPlayer(std::string lname, std::string fname, std::string newfname, std::string newlname, int newbirth_year, bool newregistration, int newcategory = -1)
-        edits the players information based on the passed in players first and last name to the value of the player being passed in
+    editPlayer(std::string lname, std::string fname, std::string newfname, std::string newlname, int newbirth_year, int newregistration, int newcategory = -1)
+        edits the players information based on the lname and fname to the values being passed in. will not edit any values left as there default
         returns void
-        if you want the new category to be automatically recomputed then leave newcategory as -1, else enter a value for newcategory
+        Defaults for string is "" and default for int is -1. for newregistration use 0 for false and 1 for true
 
     search(std::string fname, std::string lname, std::string keyword, int birth_year, int category, int registration)
         searches the ledge for players that match the criterial of the parameters
