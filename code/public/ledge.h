@@ -54,6 +54,8 @@ public:
 
     static int programYear;
 
+    void wipe(int year);
+
 private:
     //std::map<std::string, Player> ledgeMap;
 

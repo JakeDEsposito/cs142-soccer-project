@@ -112,3 +112,7 @@ Ledge:
     programYear
         this is a public static int that hold the information about what year the current ledge is using
         this programYear is used by Player when calculating the category
+
+    wipe(int year)
+        deletes all players and sets the season year to year
+        returns void

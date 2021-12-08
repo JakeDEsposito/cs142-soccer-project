@@ -195,3 +195,24 @@ int currentYear()
     std::tm *const pTInfo = std::localtime(&t);
     return 1900 + pTInfo->tm_year;
 }
+
+void Ledge::wipe(int year)
+{
+    for(auto i = ledgeMap.begin(); i != ledgeMap.end(); i++)
+    {
+        for(auto j = i->second.begin(); j != i->second.end(); j++)
+        {
+            auto playerPtr = &(j->second);
+            delete playerPtr;
+        }
+        auto innerLedgeMapPtr = &(i->second);
+        delete innerLedgeMapPtr;
+    }
+    auto ledgeMapPtr = &ledgeMap;
+    delete ledgeMapPtr;
+
+    auto programYearPtr = &programYear;
+    delete programYearPtr;
+
+    programYear = year;
+}
