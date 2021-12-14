@@ -1,0 +1,146 @@
+class:
+  function name(parameters taken)
+    breife description of what it is suposed to do
+    what it returns ahnd how it returns
+    anything else that is importaint to its operations (such as
+  limitatitions)
+
+Player:
+    Player(std::string fn, std::string ln, int yob, bool rs)
+        Sets values for fname, lname, birthYear, and regStat
+    respectively
+        Return nothing since it is a constructor
+        category is calculated automatically by using either the
+    programYear set in Ledge or the current year of the computer
+    
+    Player(std::string fn, std::string ln, int birthdate, int cat,
+    bool rs)
+        Sets values for fname, lname, birthYear, category, and regStat
+    respectively
+        Return nothing since it is a constructor
+    
+    Player(std::string data)
+        Takes in a formated string that contains the data needed to
+        initialize a new Player
+        Returns nothing since it is a constructor
+        This constructor is really only meant to be used by ledge for
+        loading a session from a file
+    
+    ~Player()
+        Creates one pointer for each on the private datas and deletes
+        it
+        Resturns nothing
+
+    getName()
+        Returns the name of the Player
+        Returns fname [space] lname (string)
+    
+    getYOB()
+        Returns the birthYear of the Player
+        Returns birthYear (int)
+
+    getCategory()
+        Returns the category of the Player
+        Returns category (int)
+        This function only returns the int value of the function
+        (without the U)
+
+    getCategoryAsString()
+        Returns the category of the Player
+        Returns U + category (string)
+        This functiom returns the category with a U infront of it
+
+    getRegistration()
+        Returns the regStat of the Player
+        Returns regStat (bool)
+
+    setRegistration(bool rs)
+        Sets the value of regStat to that of rs
+
+    operator[const std::string & query]
+        Returns a value of the Player dependent on the query
+        if query then string
+            if fn then fname
+            if ln then lname
+            if by then birthYear
+            if ca then category
+            if rs then regStat
+        All values are returned as a string
+
+    save()
+        Returns a string formated to be loaded again at a later time
+        by the Player class
+        returns (string)
+    
+    load(std::string data)
+        takes in a formated string and sets private data to the values
+        of the string
+        returns void
+
+Ledge:
+    Ledge(int ledgeYear = -1)
+        Sets the value of the programYear to ledgeYear if ledgeYear is
+    a parameter. if its not a parameter, the constructor will get the
+    computers year instead
+        Return nothing since it is a constructor
+
+    ~Ledge()
+        Deletes the ledge map and the program year
+        Returns nothing
+
+    addPlayer(Player player)
+        adds a new player to the ledge based on last and first name
+        returns void
+        if the player already exist in the ledge then the players
+        information will be edited instead
+
+    removePlayer(Player player)
+        removes a player from the ledge based on the passed in players
+        last and first name
+        return void
+    
+    removePlayer(std::string lname, std::string fname)
+        removes a player from the ledge based on lname and fname
+        returns void
+
+    editPlayer(std::string lname, std::string fname, std::string
+    newfname, std::string newlname, int newbirth_year, int
+    newregistration, int newcategory = -1)
+        edits the players information based on the lname and fname to
+    the values being passed in. will not edit any values left as there
+    default
+        returns void
+        Defaults for string is "" and default for int is -1. for
+    newregistration use 0 for false and 1 for true
+
+    search(std::string fname, std::string lname, std::string keyword,
+    int birth_year, int category, int registration)
+        searches the ledge for players that match the criterial of the
+    parameters
+        returns a std::vector<Player>
+        Default values for parameters are required to not
+    filter. Defaults for strings are "" and int are 0
+
+    allPlayers()
+        returns a std::vector<Player> that contains all the players in
+        the ledge
+
+    save(std::string filename)
+        saves tge ledge and all its players into a function of the
+        name filename
+        returns void
+    
+    load(std::string filename)
+        attempts to load a file of name filename to be used in the
+        ledge
+        returns 0 for no error and 1 for error
+    
+    programYear
+        this is a public static int that hold the information about
+        what year the current ledge is using
+        this programYear is used by Player when calculating the
+        category
+
+    wipe(int year)
+        deletes all players and sets the season year to year
+        returns void

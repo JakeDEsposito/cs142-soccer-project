@@ -1,0 +1,7 @@
+./ui.cpp:18:25: error: ‘ledger’ was not declared in this scope
+ bool saveLedger(Ledge & ledger)
+                         ^
+./ui.cpp:19:1: error: expected ‘,’ or ‘;’ before ‘{’ token
+ {
+ ^
+make: *** [ui.o] Error 1
